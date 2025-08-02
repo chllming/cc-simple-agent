@@ -48,6 +48,20 @@ echo 'source ~/.claude-agent-functions.sh' >> ~/.zshrc
 source ~/.zshrc
 ```
 
+### Option 3: Quick Setup with VS Code
+
+```bash
+# Clone and set up in one command
+git clone https://github.com/chllming/cc-simple-agent.git && cd cc-simple-agent && ./setup.sh
+
+# Copy to your project with VS Code terminals config
+cp -r .claude /path/to/your/project/
+cp .vscode/terminals.json.example /path/to/your/project/.vscode/terminals.json
+
+# Install VS Code Terminals Manager extension
+code --install-extension fabiospampinato.vscode-terminals
+```
+
 ## Directory Structure
 
 ```
@@ -304,6 +318,140 @@ ca-init-contexts  # Create missing context files
 ```
 
 ## Advanced Usage
+
+### Terminal Manager Integration
+
+Integrate Claude agents with VS Code or other terminal managers for instant access to all your agents.
+
+#### VS Code Terminals Configuration
+
+Create `.vscode/terminals.json` in your project:
+
+```json
+{
+  "autorun": false,
+  "autokill": false,
+  "terminals": [
+    {
+      "name": "🧑‍💻 Developer",
+      "description": "General development agent",
+      "command": "ca developer",
+      "cwd": "${workspaceFolder}",
+      "icon": "code"
+    },
+    {
+      "name": "🔍 Reviewer",
+      "description": "Code review specialist",
+      "command": "ca reviewer",
+      "cwd": "${workspaceFolder}",
+      "icon": "eye"
+    },
+    {
+      "name": "📝 Documenter",
+      "description": "Documentation expert",
+      "command": "ca documenter",
+      "cwd": "${workspaceFolder}",
+      "icon": "book"
+    },
+    {
+      "name": "🚀 Deploy",
+      "description": "Deployment specialist",
+      "command": "ca deploy",
+      "cwd": "${workspaceFolder}",
+      "icon": "rocket"
+    },
+    {
+      "name": "🧪 Tester",
+      "description": "Test creation agent",
+      "command": "ca tester",
+      "cwd": "${workspaceFolder}",
+      "icon": "beaker"
+    },
+    {
+      "name": "🐛 Debugger",
+      "description": "Debug specialist",
+      "command": "ca debugger",
+      "cwd": "${workspaceFolder}",
+      "icon": "bug"
+    }
+  ]
+}
+```
+
+This requires the [Terminals Manager](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-terminals) extension.
+
+#### Benefits of Terminal Integration
+
+1. **One-Click Access**: Launch any agent with a single click
+2. **Visual Organization**: Icons and descriptions for each agent
+3. **Persistent Sessions**: Keep agents running in separate tabs
+4. **Quick Switching**: Alt/Cmd+Tab between different agents
+5. **Workspace Awareness**: Agents start in the correct directory
+
+#### Setting Up for Your Project
+
+1. Install Terminals Manager extension in VS Code
+2. Create `.vscode/terminals.json` with your agents
+3. Customize icons and descriptions
+4. Access via Command Palette: "Terminals: Run"
+
+#### Example Multi-Agent Workflow
+
+With terminals configured, you can:
+
+```
+Tab 1 (Developer)  → Write new feature
+Tab 2 (Reviewer)   → Review the code
+Tab 3 (Tester)     → Create tests
+Tab 4 (Documenter) → Update docs
+Tab 5 (Deploy)     → Handle deployment
+```
+
+Each agent maintains its own context and can be quickly accessed without restarting.
+
+#### Other Terminal Managers
+
+**tmux Configuration Example**:
+
+```bash
+#!/bin/bash
+# .claude/scripts/tmux-agents.sh
+
+tmux new-session -d -s claude-agents
+tmux rename-window -t claude-agents:0 'Developer'
+tmux send-keys -t claude-agents:0 'ca developer' C-m
+
+tmux new-window -t claude-agents:1 -n 'Reviewer'
+tmux send-keys -t claude-agents:1 'ca reviewer' C-m
+
+tmux new-window -t claude-agents:2 -n 'Documenter'
+tmux send-keys -t claude-agents:2 'ca documenter' C-m
+
+tmux attach -t claude-agents
+```
+
+**Windows Terminal Configuration**:
+
+Add to `settings.json`:
+
+```json
+{
+  "profiles": {
+    "list": [
+      {
+        "name": "Claude Developer",
+        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca developer'",
+        "icon": "👨‍💻"
+      },
+      {
+        "name": "Claude Reviewer",
+        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca reviewer'",
+        "icon": "🔍"
+      }
+    ]
+  }
+}
+```
 
 ### Environment-Specific Agents
 

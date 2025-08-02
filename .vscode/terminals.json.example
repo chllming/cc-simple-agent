@@ -1,0 +1,76 @@
+{
+  "autorun": false,
+  "autokill": false,
+  "terminals": [
+    {
+      "name": "🧑‍💻 Developer",
+      "description": "General development agent",
+      "command": "ca developer",
+      "cwd": "${workspaceFolder}",
+      "icon": "code"
+    },
+    {
+      "name": "🔍 Reviewer",
+      "description": "Code review specialist",
+      "command": "ca reviewer",
+      "cwd": "${workspaceFolder}",
+      "icon": "eye"
+    },
+    {
+      "name": "📝 Documenter",
+      "description": "Documentation expert",
+      "command": "ca documenter",
+      "cwd": "${workspaceFolder}",
+      "icon": "book"
+    },
+    {
+      "name": "🚀 Backend",
+      "description": "Backend development specialist",
+      "command": "ca backend",
+      "cwd": "${workspaceFolder}",
+      "icon": "server"
+    },
+    {
+      "name": "🎨 Frontend",
+      "description": "Frontend development specialist",
+      "command": "ca frontend",
+      "cwd": "${workspaceFolder}",
+      "icon": "browser"
+    },
+    {
+      "name": "🧪 Tester",
+      "description": "Test creation and quality assurance",
+      "command": "ca tester",
+      "cwd": "${workspaceFolder}",
+      "icon": "beaker"
+    },
+    {
+      "name": "🐛 Debugger",
+      "description": "Debug and troubleshooting specialist",
+      "command": "ca debugger",
+      "cwd": "${workspaceFolder}",
+      "icon": "bug"
+    },
+    {
+      "name": "🚢 Deploy",
+      "description": "Deployment and DevOps specialist",
+      "command": "ca deploy",
+      "cwd": "${workspaceFolder}",
+      "icon": "rocket"
+    },
+    {
+      "name": "🔒 Security",
+      "description": "Security audit and best practices",
+      "command": "ca security",
+      "cwd": "${workspaceFolder}",
+      "icon": "shield"
+    },
+    {
+      "name": "📊 Architect",
+      "description": "System design and architecture",
+      "command": "ca architect",
+      "cwd": "${workspaceFolder}",
+      "icon": "organization"
+    }
+  ]
+}

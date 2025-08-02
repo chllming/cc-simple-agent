@@ -15,6 +15,7 @@ Thumbs.db
 
 # Editor files
 .vscode/
+!.vscode/terminals.json.example
 .idea/
 *.swp
 *.swo
