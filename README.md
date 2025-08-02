@@ -1,0 +1,362 @@
+# Claude Code Simple Agent System
+
+A lightweight, extensible system for creating specialized Claude Code agents with persistent context and custom commands. Perfect for teams wanting domain-specific AI assistants that remember their work between sessions.
+
+## What This Is
+
+This repository provides a template for setting up specialized Claude Code agents in your project. Each agent:
+- Has a unique personality and domain expertise
+- Maintains context between sessions
+- Provides slash commands for common tasks
+- Can be launched with simple shell commands
+
+## Quick Start
+
+### Option 1: Clone and Copy
+
+```bash
+# Clone this repository
+git clone https://github.com/chllming/cc-simple-agent.git
+
+# Copy the .claude directory to your project
+cp -r cc-simple-agent/.claude /path/to/your/project/
+
+# Copy shell functions to your home directory
+cp cc-simple-agent/shell-functions/claude-agent-functions.sh ~/.claude-agent-functions.sh
+
+# Add to your .zshrc or .bashrc
+echo 'source ~/.claude-agent-functions.sh' >> ~/.zshrc
+source ~/.zshrc
+
+# Initialize agents in your project
+cd /path/to/your/project
+ca-init
+```
+
+### Option 2: Git Submodule
+
+```bash
+# In your project root
+git submodule add https://github.com/chllming/cc-simple-agent.git .claude-agent-template
+
+# Copy the template
+cp -r .claude-agent-template/.claude .
+
+# Set up shell functions (same as Option 1)
+cp .claude-agent-template/shell-functions/claude-agent-functions.sh ~/.claude-agent-functions.sh
+echo 'source ~/.claude-agent-functions.sh' >> ~/.zshrc
+source ~/.zshrc
+```
+
+## Directory Structure
+
+```
+.claude/
+├── agents/           # ⚠️ CLAUDE NATIVE - DO NOT MODIFY
+├── systemprompts/    # Your custom agent personalities
+├── contexts/         # Agent state persistence
+├── commands/         # Slash commands
+├── scripts/          # Utility scripts
+└── README.md         # Project-specific documentation
+```
+
+### Important: `.claude/agents/`
+
+This directory is reserved for Claude Code's native sub-agent functionality. Do not modify files here. See [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code/sub-agents).
+
+## Creating Your First Agent
+
+### 1. Define the Agent
+
+Create `.claude/systemprompts/backend.md`:
+
+```markdown
+# Backend Developer Agent
+
+You are a backend development specialist with expertise in APIs, databases, and system architecture.
+
+## Core Responsibilities
+- Design and implement RESTful APIs
+- Optimize database queries and schemas
+- Ensure code quality and testing
+- Review security implications
+
+## Key Knowledge
+- Node.js, Python, Go
+- PostgreSQL, MongoDB, Redis
+- Docker, Kubernetes
+- CI/CD pipelines
+
+## Standards
+- Follow RESTful conventions
+- Write comprehensive tests
+- Document all APIs
+- Consider scalability
+```
+
+### 2. Create Initial Context
+
+Create `.claude/contexts/backend_context.md`:
+
+```markdown
+# Backend Agent Context
+
+## Recent Activities
+- Initial agent setup
+
+## Current Focus
+- Learning codebase structure
+
+## Pending Tasks
+- Review existing API endpoints
+- Identify optimization opportunities
+
+## Important Notes
+- Project uses Node.js with TypeScript
+- PostgreSQL as primary database
+```
+
+### 3. Add Update Command
+
+Create `.claude/commands/update-backend-context.md`:
+
+```markdown
+# Update Backend Context
+
+Review your session and update `.claude/contexts/backend_context.md`.
+
+Focus on:
+- APIs created or modified
+- Database schema changes
+- Performance optimizations
+- Security improvements
+- Test coverage changes
+- Technical debt identified
+```
+
+### 4. Launch Your Agent
+
+```bash
+# Basic launch
+ca backend
+
+# With yolo mode (skip permissions)
+ca backend --yolo
+
+# Generate quick alias
+.claude/scripts/generate-agent-extensions.sh
+source .claude/generated-aliases.sh
+
+# Now you can use
+ca-backend
+```
+
+## Example Agents
+
+This template includes several example agents to get you started:
+
+### Developer Agent
+A general software development assistant for coding tasks.
+
+```bash
+ca developer
+```
+
+### Reviewer Agent
+Code review specialist focusing on quality and best practices.
+
+```bash
+ca reviewer
+```
+
+### Documenter Agent
+Technical documentation expert for APIs, guides, and README files.
+
+```bash
+ca documenter
+```
+
+## Shell Commands
+
+### Core Commands
+
+| Command | Description |
+|---------|-------------|
+| `ca <agent>` | Launch agent |
+| `ca <agent> --yolo` | Launch with permissions bypass |
+| `ca <agent> --model claude-3-opus` | Launch with specific model |
+| `ca-list` | List available agents |
+| `ca-init` | Initialize Claude in a project |
+| `ca-init-contexts` | Create missing context files |
+
+### Quick Aliases
+
+After running the generate script, you'll have aliases like:
+- `ca-backend` → `ca backend --yolo`
+- `ca-frontend` → `ca frontend --yolo`
+- etc.
+
+## Slash Commands
+
+Every agent should have at least these commands:
+
+| Command | Purpose |
+|---------|---------|
+| `/update-context` | Generic context update template |
+| `/update-{agent}-context` | Agent-specific context update |
+| `/gitupdate` | Review and commit changes |
+
+## Extending the System
+
+### Adding New Agents
+
+1. Create system prompt: `.claude/systemprompts/newagent.md`
+2. Create context file: `.claude/contexts/newagent_context.md`
+3. Generate extensions: `.claude/scripts/generate-agent-extensions.sh`
+4. Source aliases: `source .claude/generated-aliases.sh`
+
+### Custom Slash Commands
+
+Create any markdown file in `.claude/commands/` to add new slash commands:
+
+```markdown
+# My Custom Command
+
+Description of what this command does.
+
+## Steps:
+1. First step
+2. Second step
+3. Third step
+```
+
+### Project-Specific Setup
+
+Create a setup script for your project's agents:
+
+```bash
+#!/bin/bash
+# setup-project-agents.sh
+
+# Create backend agent
+cat > .claude/systemprompts/backend.md << 'EOF'
+# Backend Agent
+Your backend-specific prompt here...
+EOF
+
+# Create frontend agent
+cat > .claude/systemprompts/frontend.md << 'EOF'
+# Frontend Agent
+Your frontend-specific prompt here...
+EOF
+
+# Generate extensions
+.claude/scripts/generate-agent-extensions.sh
+
+echo "Project agents created!"
+```
+
+## Best Practices
+
+### 1. Agent Design
+- Keep agents focused on specific domains
+- Include relevant technical context
+- List key responsibilities clearly
+- Specify coding standards
+
+### 2. Context Management
+- Update contexts after significant work
+- Remove completed tasks
+- Keep information actionable
+- Include discoveries and decisions
+
+### 3. Naming Conventions
+- System prompts: `{agent}.md`
+- Context files: `{agent}_context.md`
+- Update commands: `update-{agent}-context.md`
+
+### 4. Team Collaboration
+- Commit agent prompts to share expertise
+- Review and update shared contexts
+- Document agent capabilities
+- Create agents for common workflows
+
+## Troubleshooting
+
+### "Command not found: ca"
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+### "No .claude directory found"
+```bash
+ca-init  # Initialize in current directory
+```
+
+### "Agent prompt not found"
+```bash
+ca-list  # See available agents
+```
+
+### Missing context files
+```bash
+ca-init-contexts  # Create missing context files
+```
+
+## Advanced Usage
+
+### Environment-Specific Agents
+
+Create agents for different environments:
+
+```bash
+.claude/systemprompts/prod-debug.md    # Production debugging
+.claude/systemprompts/test-writer.md   # Test creation
+.claude/systemprompts/deploy.md        # Deployment specialist
+```
+
+### Chain Agents
+
+Use multiple agents in sequence:
+
+```bash
+# Development session
+ca developer      # Write feature
+ca reviewer       # Review code
+ca test-writer    # Add tests
+ca documenter     # Update docs
+```
+
+### Project Templates
+
+Create reusable agent sets:
+
+```bash
+# Save your agent set
+tar -czf my-agents.tar.gz .claude/systemprompts/*.md
+
+# Apply to new project
+tar -xzf my-agents.tar.gz -C /new/project/
+```
+
+## Contributing
+
+To improve this template:
+
+1. Fork the repository
+2. Add new example agents
+3. Improve documentation
+4. Submit a pull request
+
+## License
+
+MIT License - Use freely in your projects!
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/chllming/cc-simple-agent/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/chllming/cc-simple-agent/discussions)
+
+---
+
+Made with ❤️ for the Claude Code community
