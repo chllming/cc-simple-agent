@@ -86,8 +86,8 @@ claude-agent() {
     
     # Build command array
     local cmd=(claude)
-    [[ -n "$YOLO" ]] && cmd+=($YOLO)
-    [[ -n "$MODEL" ]] && cmd+=($MODEL)
+    [[ -n "$YOLO" ]] && cmd+=("$YOLO")
+    [[ -n "$MODEL" ]] && cmd+=("$MODEL")
     cmd+=(--append-system-prompt "$(cat "$AGENT_PROMPT_FILE")")
     [[ ${#EXTRA_ARGS[@]} -gt 0 ]] && cmd+=("${EXTRA_ARGS[@]}")
     cmd+=("$INITIAL_PROMPT")
@@ -303,8 +303,14 @@ ca-list() {
         return 1
     fi
     
+    # Cache agent names if not already cached
+    if [[ -z "${CLAUDE_AGENT_NAMES:-}" ]] || [[ "${CLAUDE_AGENT_NAMES_DIR:-}" != "$PROMPTS_DIR" ]]; then
+        export CLAUDE_AGENT_NAMES=$(ls -1 "$PROMPTS_DIR" 2>/dev/null | grep -v README | sed 's/\.md$//' | sort | tr '\n' ' ')
+        export CLAUDE_AGENT_NAMES_DIR="$PROMPTS_DIR"
+    fi
+    
     echo "Available agents in $PROJECT_ROOT:"
-    ls -1 "$PROMPTS_DIR" 2>/dev/null | grep -v README | sed 's/\.md$//' | sort
+    echo "$CLAUDE_AGENT_NAMES" | tr ' ' '\n' | grep -v '^$'
     
     # Check for missing context files
     local missing_contexts=()

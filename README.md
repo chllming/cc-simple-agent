@@ -205,10 +205,26 @@ ca documenter
 
 ### Quick Aliases
 
+Generate convenient aliases for your agents:
+
+```bash
+# Generate aliases for all agents
+.claude/scripts/generate-agent-extensions.sh
+
+# Source the generated aliases
+source .claude/generated-aliases.sh
+
+# List all available aliases
+ca-list-aliases
+```
+
 After running the generate script, you'll have aliases like:
 - `ca-backend` → `ca backend --yolo`
 - `ca-frontend` → `ca frontend --yolo`
+- `ca-developer` → `ca developer --yolo`
 - etc.
+
+These aliases automatically include `--yolo` for permission bypass, making agent launches faster.
 
 ## Slash Commands
 
