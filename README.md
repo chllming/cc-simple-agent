@@ -333,42 +333,42 @@ Create `.vscode/terminals.json` in your project:
   "autokill": false,
   "terminals": [
     {
-      "name": "🧑‍💻 Developer",
+      "name": "Developer",
       "description": "General development agent",
       "command": "ca developer",
       "cwd": "${workspaceFolder}",
       "icon": "code"
     },
     {
-      "name": "🔍 Reviewer",
+      "name": "Reviewer",
       "description": "Code review specialist",
       "command": "ca reviewer",
       "cwd": "${workspaceFolder}",
       "icon": "eye"
     },
     {
-      "name": "📝 Documenter",
+      "name": "Documenter",
       "description": "Documentation expert",
       "command": "ca documenter",
       "cwd": "${workspaceFolder}",
       "icon": "book"
     },
     {
-      "name": "🚀 Deploy",
+      "name": "Deploy",
       "description": "Deployment specialist",
       "command": "ca deploy",
       "cwd": "${workspaceFolder}",
       "icon": "rocket"
     },
     {
-      "name": "🧪 Tester",
+      "name": "Tester",
       "description": "Test creation agent",
       "command": "ca tester",
       "cwd": "${workspaceFolder}",
       "icon": "beaker"
     },
     {
-      "name": "🐛 Debugger",
+      "name": "Debugger",
       "description": "Debug specialist",
       "command": "ca debugger",
       "cwd": "${workspaceFolder}",
@@ -379,6 +379,8 @@ Create `.vscode/terminals.json` in your project:
 ```
 
 This requires the [Terminals Manager](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-terminals) extension.
+
+**Available VS Code Icons**: `code`, `eye`, `book`, `server`, `browser`, `beaker`, `bug`, `rocket`, `shield`, `organization`, `database`, `cloud`, `package`, `gear`, `tools`, `terminal`, `file-code`, `git-branch`, `check`, `x`, `play`, `debug`, `stop`, and many more. See [VS Code Codicon Reference](https://microsoft.github.io/vscode-codicons/dist/codicon.html).
 
 #### Benefits of Terminal Integration
 
@@ -440,13 +442,11 @@ Add to `settings.json`:
     "list": [
       {
         "name": "Claude Developer",
-        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca developer'",
-        "icon": "👨‍💻"
+        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca developer'"
       },
       {
         "name": "Claude Reviewer",
-        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca reviewer'",
-        "icon": "🔍"
+        "commandline": "wsl.exe bash -c 'cd /path/to/project && ca reviewer'"
       }
     ]
   }
