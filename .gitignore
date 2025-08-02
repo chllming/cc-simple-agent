@@ -1,0 +1,21 @@
+# Environment variables
+.env
+.env.*
+
+# Generated files
+.claude/generated-aliases.sh
+
+# Temporary files
+.claude/temp/
+.claude/cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
